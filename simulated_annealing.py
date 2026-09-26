@@ -5,35 +5,24 @@ from objective_function import calcular_costo
 
 
 def generar_solucion_inicial(datos):
-    """Crea un horario inicial inteligente priorizando los exámenes más conflictivos (Largest Degree)."""
+    """Crea un horario inicial aleatorio (Línea Base)."""
     num_examenes = datos['num_examenes']
     aulas = datos['aulas']
     examenes_crudos = datos['examenes_crudos']
-    matriz_conflictos = datos['matriz_conflictos']
 
-    # 1. Sumamos la fila de cada examen para saber cuántos conflictos totales tiene
-    conflictos_totales = np.sum(matriz_conflictos, axis=1)
-
-    # 2. Ordenamos los exámenes del más conflictivo al menos conflictivo
-    orden_examenes = np.argsort(-conflictos_totales)
-
-    # Preparamos una lista vacía del tamaño correcto
-    asignacion = [{}] * num_examenes
-
-    # 3. Asignamos en el orden inteligente
-    for i in orden_examenes:
+    asignacion = []
+    for i in range(num_examenes):
         aula_elegida = random.choice(aulas)
         franjas_aula = [f.strip() for f in str(aula_elegida['Franjas_disponibles']).split(',')]
         franja_elegida = random.choice(franjas_aula)
         inscritos = examenes_crudos.iloc[i]['Estudiantes']
 
-        asignacion[i] = {
+        asignacion.append({
             'franja': franja_elegida,
             'aula': aula_elegida['Aula'],
             'inscritos': inscritos,
             'capacidad_aula': aula_elegida['Capacidad']
-        }
-
+        })
     return asignacion
 
 
