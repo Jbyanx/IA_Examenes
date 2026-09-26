@@ -3,8 +3,9 @@ import numpy as np
 import random
 import time
 import pandas as pd
-from simulated_annealing import ejecutar_sa
 from data_loader import cargar_datos
+from simulated_annealing import ejecutar_sa
+from ant_colony import ejecutar_aco
 
 
 def tarea_simulacion(semilla):
@@ -24,6 +25,20 @@ def tarea_simulacion(semilla):
         'iteraciones_por_T': 100,
         'T_final': 1.0
     }
+
+    # Parámetros básicos para la Línea Base del ACO (MAX-MIN Ant System)
+    parametros_aco = {
+        'num_hormigas': 10,
+        'iteraciones': 20,
+        'alpha': 1.0,  # Peso de la feromona
+        'beta': 2.0,  # Peso de la heurística
+        'evaporacion': 0.1,  # Tasa de olvido (rho)
+        'tau_max': 10.0,
+        'tau_min': 0.1
+    }
+
+    # Ejecutamos el algoritmo ACO
+    costo_final, mejor_horario = ejecutar_aco(datos_globales, parametros_aco)
 
     # Ejecutamos el algoritmo real
     costo_final, mejor_horario = ejecutar_sa(datos_globales, parametros_sa)
@@ -63,17 +78,25 @@ if __name__ == '__main__':
         fin_tiempo = time.time()
         print(f"\n¡Las 30 simulaciones terminaron en {fin_tiempo - inicio_tiempo:.2f} segundos!")
 
-        nombre_base = 'resultados_SA_Largest_Degree'
+        nombre_base = 'resultados_ACO_linea_base'
 
         df_resultados = pd.DataFrame(resultados)
+
+        tiempo_total_suma = df_resultados['tiempo_segundos'].sum()
+        fila_total = pd.DataFrame([{
+            'semilla': 'TOTAL',
+            'costo': '',
+            'tiempo_segundos': round(tiempo_total_suma, 2)
+        }])
+
+        df_resultados = pd.concat([df_resultados, fila_total], ignore_index=True)
         df_resultados.to_csv(f'{nombre_base}.csv', index=False)
 
-        nota_explicativa = """Algoritmo: Enfriamiento Simulado (Simulated Annealing)
-Experimento: Segunda prueba.
-Modificación: Se reemplazó el inicio aleatorio por una Heurística Constructiva (Largest Degree). 
-El algoritmo ahora acomoda primero los exámenes con más cruces de estudiantes.
-Parámetros: T_inicial=10000, alpha=0.95, iteraciones=100.
-"""
+        nota_explicativa = """Algoritmo: Optimización por Colonias de Hormigas (MMAS - MAX-MIN Ant System)
+        Experimento: Línea Base (Baseline).
+        Parámetros: num_hormigas=10, iteraciones=20, alpha=1.0, beta=2.0, evaporacion=0.1.
+        Comportamiento: Se evalúa la convergencia del algoritmo usando una influencia heurística moderada y límites de feromona.
+        """
 
         with open(f'{nombre_base}.txt', 'w', encoding='utf-8') as archivo_txt:
             archivo_txt.write(nota_explicativa)
