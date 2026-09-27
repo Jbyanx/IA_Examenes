@@ -2,7 +2,7 @@ import pandas as pd
 
 resultados_analisis = []
 
-# Iteramos sobre los 10 archivos que generaste
+# Iteramos sobre los 10 archivos que generamos
 for i in range(1, 11):
     nombre_archivo = f'resultados/5.resultados_SA_Bloque2/resultados_SA_Bloque2_Config_{i}.csv'
     try:
