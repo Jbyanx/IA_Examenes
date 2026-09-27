@@ -4,7 +4,7 @@ resultados_analisis = []
 
 # Iteramos sobre los 10 archivos que generaste
 for i in range(1, 11):
-    nombre_archivo = f'resultados/4.resultados_SA_Bloque1/resultados_SA_Bloque1_Config_{i}.csv'
+    nombre_archivo = f'resultados/5.resultados_SA_Bloque2/resultados_SA_Bloque2_Config_{i}.csv'
     try:
         df = pd.read_csv(nombre_archivo)
 
