@@ -1,0 +1,83 @@
+BITÁCORA DE EXPERIMENTACIÓN - BLOQUE 2 (COLONIAS DE HORMIGAS REFINADO)
+=================================================================
+
+Configuración 1:
+- Archivo: resultados_ACO_Bloque2_Config_1.csv
+- num_hormigas: 30
+- iteraciones: 50
+- beta (heurística): 3.0
+- evaporacion (rho): 0.2
+- Tiempo de procesamiento CPU (suma total): 583.09 s
+----------------------------------------
+Configuración 2:
+- Archivo: resultados_ACO_Bloque2_Config_2.csv
+- num_hormigas: 30
+- iteraciones: 50
+- beta (heurística): 3.0
+- evaporacion (rho): 0.5
+- Tiempo de procesamiento CPU (suma total): 595.49 s
+----------------------------------------
+Configuración 3:
+- Archivo: resultados_ACO_Bloque2_Config_3.csv
+- num_hormigas: 30
+- iteraciones: 100
+- beta (heurística): 3.0
+- evaporacion (rho): 0.2
+- Tiempo de procesamiento CPU (suma total): 1190.07 s
+----------------------------------------
+Configuración 4:
+- Archivo: resultados_ACO_Bloque2_Config_4.csv
+- num_hormigas: 30
+- iteraciones: 100
+- beta (heurística): 3.0
+- evaporacion (rho): 0.5
+- Tiempo de procesamiento CPU (suma total): 1183.35 s
+----------------------------------------
+Configuración 5:
+- Archivo: resultados_ACO_Bloque2_Config_5.csv
+- num_hormigas: 50
+- iteraciones: 50
+- beta (heurística): 3.0
+- evaporacion (rho): 0.2
+- Tiempo de procesamiento CPU (suma total): 977.9 s
+----------------------------------------
+Configuración 6:
+- Archivo: resultados_ACO_Bloque2_Config_6.csv
+- num_hormigas: 50
+- iteraciones: 50
+- beta (heurística): 3.0
+- evaporacion (rho): 0.5
+- Tiempo de procesamiento CPU (suma total): 944.21 s
+----------------------------------------
+Configuración 7:
+- Archivo: resultados_ACO_Bloque2_Config_7.csv
+- num_hormigas: 50
+- iteraciones: 100
+- beta (heurística): 3.0
+- evaporacion (rho): 0.5
+- Tiempo de procesamiento CPU (suma total): 1872.34 s
+----------------------------------------
+Configuración 8:
+- Archivo: resultados_ACO_Bloque2_Config_8.csv
+- num_hormigas: 30
+- iteraciones: 50
+- beta (heurística): 5.0
+- evaporacion (rho): 0.5
+- Tiempo de procesamiento CPU (suma total): 576.34 s
+----------------------------------------
+Configuración 9:
+- Archivo: resultados_ACO_Bloque2_Config_9.csv
+- num_hormigas: 50
+- iteraciones: 50
+- beta (heurística): 5.0
+- evaporacion (rho): 0.5
+- Tiempo de procesamiento CPU (suma total): 968.52 s
+----------------------------------------
+Configuración 10:
+- Archivo: resultados_ACO_Bloque2_Config_10.csv
+- num_hormigas: 50
+- iteraciones: 100
+- beta (heurística): 5.0
+- evaporacion (rho): 0.5
+- Tiempo de procesamiento CPU (suma total): 1799.89 s
+----------------------------------------

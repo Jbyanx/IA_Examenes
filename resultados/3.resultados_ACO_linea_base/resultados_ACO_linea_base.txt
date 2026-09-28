@@ -1,0 +1,5 @@
+Algoritmo: Optimización por Colonias de Hormigas (MMAS - MAX-MIN Ant System)
+        Experimento: Línea Base (Baseline).
+        Parámetros: num_hormigas=10, iteraciones=20, alpha=1.0, beta=2.0, evaporacion=0.1.
+        Comportamiento: Se evalúa la convergencia del algoritmo usando una influencia heurística moderada y límites de feromona.
+        

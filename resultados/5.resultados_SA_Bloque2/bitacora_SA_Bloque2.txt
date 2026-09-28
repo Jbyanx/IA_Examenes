@@ -1,0 +1,91 @@
+BITÁCORA DE EXPERIMENTACIÓN - BLOQUE 2 (ENFRIAMIENTO SIMULADO REFINADO)
+=================================================================
+
+Configuración 1:
+- Archivo: resultados_SA_Bloque2_Config_1.csv
+- T_inicial: 5000.0
+- alpha (tasa de enfriamiento): 0.96
+- iteraciones_por_T: 100
+- Heurística Inicial: ACTIVADA (Largest Degree)
+- Tiempo de procesamiento CPU (suma total): 572.57 s
+----------------------------------------
+Configuración 2:
+- Archivo: resultados_SA_Bloque2_Config_2.csv
+- T_inicial: 5000.0
+- alpha (tasa de enfriamiento): 0.98
+- iteraciones_por_T: 100
+- Heurística Inicial: ACTIVADA (Largest Degree)
+- Tiempo de procesamiento CPU (suma total): 1211.42 s
+----------------------------------------
+Configuración 3:
+- Archivo: resultados_SA_Bloque2_Config_3.csv
+- T_inicial: 5000.0
+- alpha (tasa de enfriamiento): 0.99
+- iteraciones_por_T: 100
+- Heurística Inicial: ACTIVADA (Largest Degree)
+- Tiempo de procesamiento CPU (suma total): 2402.66 s
+----------------------------------------
+Configuración 4:
+- Archivo: resultados_SA_Bloque2_Config_4.csv
+- T_inicial: 10000.0
+- alpha (tasa de enfriamiento): 0.96
+- iteraciones_por_T: 100
+- Heurística Inicial: ACTIVADA (Largest Degree)
+- Tiempo de procesamiento CPU (suma total): 654.22 s
+----------------------------------------
+Configuración 5:
+- Archivo: resultados_SA_Bloque2_Config_5.csv
+- T_inicial: 10000.0
+- alpha (tasa de enfriamiento): 0.98
+- iteraciones_por_T: 100
+- Heurística Inicial: ACTIVADA (Largest Degree)
+- Tiempo de procesamiento CPU (suma total): 1304.9 s
+----------------------------------------
+Configuración 6:
+- Archivo: resultados_SA_Bloque2_Config_6.csv
+- T_inicial: 10000.0
+- alpha (tasa de enfriamiento): 0.99
+- iteraciones_por_T: 100
+- Heurística Inicial: ACTIVADA (Largest Degree)
+- Tiempo de procesamiento CPU (suma total): 2554.01 s
+----------------------------------------
+Configuración 7:
+- Archivo: resultados_SA_Bloque2_Config_7.csv
+- T_inicial: 10000.0
+- alpha (tasa de enfriamiento): 0.99
+- iteraciones_por_T: 150
+- Heurística Inicial: ACTIVADA (Largest Degree)
+- Tiempo de procesamiento CPU (suma total): 3861.42 s
+----------------------------------------
+Configuración 8:
+- Archivo: resultados_SA_Bloque2_Config_8.csv
+- T_inicial: 10000.0
+- alpha (tasa de enfriamiento): 0.97
+- iteraciones_por_T: 120
+- Heurística Inicial: ACTIVADA (Largest Degree)
+- Tiempo de procesamiento CPU (suma total): 1064.08 s
+----------------------------------------
+Configuración 9:
+- Archivo: resultados_SA_Bloque2_Config_9.csv
+- T_inicial: 5000.0
+- alpha (tasa de enfriamiento): 0.99
+- iteraciones_por_T: 150
+- Heurística Inicial: ACTIVADA (Largest Degree)
+- Tiempo de procesamiento CPU (suma total): 3508.17 s
+----------------------------------------
+Configuración 10:
+- Archivo: resultados_SA_Bloque2_Config_10.csv
+- T_inicial: 5000.0
+- alpha (tasa de enfriamiento): 0.97
+- iteraciones_por_T: 120
+- Heurística Inicial: ACTIVADA (Largest Degree)
+- Tiempo de procesamiento CPU (suma total): 936.15 s
+----------------------------------------
+CONCLUSION:
+"El Enfriamiento Simulado con Heurística Constructiva
+es capaz de encontrar los mínimos globales más bajos
+(costo de 14,520), pero su naturaleza errática lo hace
+inestable. La Configuración 10 se corona como la campeona
+ por lograr el mejor costo con un tiempo muy ágil
+ (31 segundos), superando en eficiencia a la Configuración
+  9 que tarda casi el cuádruple".

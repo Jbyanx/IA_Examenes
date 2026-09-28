@@ -1,0 +1,5 @@
+Algoritmo: Enfriamiento Simulado (Simulated Annealing)
+Experimento: Segunda prueba.
+Modificación: Se reemplazó el inicio aleatorio por una Heurística Constructiva (Largest Degree). 
+El algoritmo ahora acomoda primero los exámenes con más cruces de estudiantes.
+Parámetros: T_inicial=10000, alpha=0.95, iteraciones=100.

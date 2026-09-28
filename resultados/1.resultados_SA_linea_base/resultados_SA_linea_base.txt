@@ -1,0 +1,5 @@
+Algoritmo: Enfriamiento Simulado (Simulated Annealing)
+        Experimento: Línea Base (Baseline).
+        Modificación: Inicialización puramente aleatoria (sin heurística de ordenamiento).
+        Parámetros: T_inicial=10000, alpha=0.95, iteraciones=100.
+        
