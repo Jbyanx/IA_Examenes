@@ -3,105 +3,75 @@ import numpy as np
 import random
 import time
 import pandas as pd
+from simulated_annealing import ejecutar_sa
 from ant_colony import ejecutar_aco
 from data_loader import cargar_datos
 
 
-def tarea_simulacion_aco(semilla, parametros_aco):
-    inicio_tarea = time.time()
+def tarea_validacion_sa(semilla, parametros):
+    inicio = time.time()
     np.random.seed(semilla)
     random.seed(semilla)
+    costo, _ = ejecutar_sa(datos_globales, parametros)
+    return {'semilla': semilla, 'costo': costo, 'tiempo_segundos': round(time.time() - inicio, 2)}
 
-    # Ejecutamos el algoritmo de Hormigas
-    costo_final, mejor_horario = ejecutar_aco(datos_globales, parametros_aco)
 
-    fin_tarea = time.time()
-    tiempo_ejecucion = fin_tarea - inicio_tarea
-
-    return {
-        'semilla': semilla,
-        'costo': costo_final,
-        'tiempo_segundos': round(tiempo_ejecucion, 2)
-    }
+def tarea_validacion_aco(semilla, parametros):
+    inicio = time.time()
+    np.random.seed(semilla)
+    random.seed(semilla)
+    costo, _ = ejecutar_aco(datos_globales, parametros)
+    return {'semilla': semilla, 'costo': costo, 'tiempo_segundos': round(time.time() - inicio, 2)}
 
 
 if __name__ == '__main__':
     nombre_archivo = 'instancia_examenes_tema03.xlsx'
 
     try:
-        print("--- INICIANDO SISTEMA DE ASIGNACIÓN (BLOQUE 1 - ACO) ---")
+        print("--- INICIANDO VALIDACIÓN FINAL (SA vs ACO) ---")
         datos_globales = cargar_datos(nombre_archivo)
-        semillas = list(range(1, 31))
 
-        # Malla de 10 configuraciones exploratorias para el Bloque 1 de ACO
-        configuraciones_bloque_1_aco = [
-            {'id': 1, 'num_hormigas': 10, 'iteraciones': 20, 'alpha': 1.0, 'beta': 1.0, 'evaporacion': 0.1,
-             'tau_max': 10.0, 'tau_min': 0.1},
-            {'id': 2, 'num_hormigas': 10, 'iteraciones': 20, 'alpha': 1.0, 'beta': 3.0, 'evaporacion': 0.1,
-             'tau_max': 10.0, 'tau_min': 0.1},
-            {'id': 3, 'num_hormigas': 10, 'iteraciones': 20, 'alpha': 1.0, 'beta': 5.0, 'evaporacion': 0.1,
-             'tau_max': 10.0, 'tau_min': 0.1},
-            {'id': 4, 'num_hormigas': 20, 'iteraciones': 20, 'alpha': 1.0, 'beta': 3.0, 'evaporacion': 0.1,
-             'tau_max': 10.0, 'tau_min': 0.1},
-            {'id': 5, 'num_hormigas': 20, 'iteraciones': 20, 'alpha': 1.0, 'beta': 5.0, 'evaporacion': 0.1,
-             'tau_max': 10.0, 'tau_min': 0.1},
-            {'id': 6, 'num_hormigas': 10, 'iteraciones': 50, 'alpha': 1.0, 'beta': 3.0, 'evaporacion': 0.1,
-             'tau_max': 10.0, 'tau_min': 0.1},
-            {'id': 7, 'num_hormigas': 10, 'iteraciones': 50, 'alpha': 1.0, 'beta': 5.0, 'evaporacion': 0.1,
-             'tau_max': 10.0, 'tau_min': 0.1},
-            {'id': 8, 'num_hormigas': 20, 'iteraciones': 50, 'alpha': 1.0, 'beta': 3.0, 'evaporacion': 0.1,
-             'tau_max': 10.0, 'tau_min': 0.1},
-            {'id': 9, 'num_hormigas': 20, 'iteraciones': 20, 'alpha': 1.0, 'beta': 3.0, 'evaporacion': 0.3,
-             'tau_max': 10.0, 'tau_min': 0.1},
-            {'id': 10, 'num_hormigas': 20, 'iteraciones': 50, 'alpha': 1.0, 'beta': 3.0, 'evaporacion': 0.3,
-             'tau_max': 10.0, 'tau_min': 0.1}
-        ]
+        # SEMILLAS NUEVAS PARA VALIDACIÓN (31 al 60)
+        semillas_validacion = list(range(31, 61))
 
-        nombre_bitacora = 'bitacora_ACO_Bloque1.txt'
+        # Parámetros de los Campeones
+        parametros_campeon_sa = {'T_inicial': 5000.0, 'alpha': 0.97, 'iteraciones_por_T': 120, 'T_final': 1.0}
+        parametros_campeon_aco = {'num_hormigas': 50, 'iteraciones': 100, 'alpha': 1.0, 'beta': 5.0, 'evaporacion': 0.5,
+                                  'tau_max': 10.0, 'tau_min': 0.1}
 
-        with open(nombre_bitacora, 'w', encoding='utf-8') as archivo_txt:
-            archivo_txt.write("BITÁCORA DE EXPERIMENTACIÓN - BLOQUE 1 (COLONIAS DE HORMIGAS - MMAS)\n")
-            archivo_txt.write("=" * 65 + "\n\n")
+        # ---------------------------------------------------------
+        # 1. EJECUTAR EL CAMPEÓN SA
+        # ---------------------------------------------------------
+        print("\n[1/2] Ejecutando Campeón SA en nuevas semillas...")
+        resultados_sa = []
+        lista_params_sa = [parametros_campeon_sa] * len(semillas_validacion)
 
-        tiempo_inicio_global = time.time()
+        with concurrent.futures.ProcessPoolExecutor() as executor:
+            for res in executor.map(tarea_validacion_sa, semillas_validacion, lista_params_sa):
+                resultados_sa.append(res)
 
-        for config in configuraciones_bloque_1_aco:
-            print(f"\n--- Ejecutando Configuración {config['id']} / 10 ---")
-            print(
-                f"Hormigas={config['num_hormigas']}, Iter={config['iteraciones']}, Beta={config['beta']}, Rho={config['evaporacion']}")
+        df_sa = pd.DataFrame(resultados_sa)
+        df_sa.to_csv("resultados_Validacion_SA_Campeon.csv", index=False)
+        print("-> Campeón SA completado.")
 
-            resultados = []
-            lista_parametros = [config] * len(semillas)
+        # ---------------------------------------------------------
+        # 2. EJECUTAR EL CAMPEÓN ACO
+        # ---------------------------------------------------------
+        print("\n[2/2] Ejecutando Campeón ACO en nuevas semillas...")
+        resultados_aco = []
+        lista_params_aco = [parametros_campeon_aco] * len(semillas_validacion)
 
-            with concurrent.futures.ProcessPoolExecutor() as executor:
-                for resultado in executor.map(tarea_simulacion_aco, semillas, lista_parametros):
-                    resultados.append(resultado)
+        with concurrent.futures.ProcessPoolExecutor() as executor:
+            for res in executor.map(tarea_validacion_aco, semillas_validacion, lista_params_aco):
+                resultados_aco.append(res)
 
-            nombre_csv = f"resultados_ACO_Bloque1_Config_{config['id']}.csv"
-            df_resultados = pd.DataFrame(resultados)
+        df_aco = pd.DataFrame(resultados_aco)
+        df_aco.to_csv("resultados_Validacion_ACO_Campeon.csv", index=False)
+        print("-> Campeón ACO completado.")
 
-            tiempo_total_suma = df_resultados['tiempo_segundos'].sum()
-            fila_total = pd.DataFrame(
-                [{'semilla': 'TOTAL', 'costo': '', 'tiempo_segundos': round(tiempo_total_suma, 2)}])
-
-            df_resultados = pd.concat([df_resultados, fila_total], ignore_index=True)
-            df_resultados.to_csv(nombre_csv, index=False)
-
-            with open(nombre_bitacora, 'a', encoding='utf-8') as archivo_txt:
-                archivo_txt.write(f"Configuración {config['id']}:\n")
-                archivo_txt.write(f"- Archivo: {nombre_csv}\n")
-                archivo_txt.write(f"- num_hormigas: {config['num_hormigas']}\n")
-                archivo_txt.write(f"- iteraciones: {config['iteraciones']}\n")
-                archivo_txt.write(f"- beta (heurística): {config['beta']}\n")
-                archivo_txt.write(f"- evaporacion (rho): {config['evaporacion']}\n")
-                archivo_txt.write(f"- Tiempo de procesamiento CPU (suma total): {round(tiempo_total_suma, 2)} s\n")
-                archivo_txt.write("-" * 40 + "\n")
-
-            print(f"Configuración {config['id']} completada y guardada en {nombre_csv}")
-
-        tiempo_fin_global = time.time()
+        print("\n¡VALIDACIÓN FINAL COMPLETADA CON ÉXITO!")
         print(
-            f"\n¡EL BLOQUE 1 ACO COMPLETADO! Tiempo total en la vida real: {round((tiempo_fin_global - tiempo_inicio_global) / 60, 2)} minutos.")
+            "Se generaron los archivos 'resultados_Validacion_SA_Campeon.csv' y 'resultados_Validacion_ACO_Campeon.csv'")
 
     except FileNotFoundError:
         print(f"Error: No se encontró el archivo '{nombre_archivo}'.")
